@@ -1,5 +1,3 @@
-
-# encoding=utf-8
 import os
 import numpy as np
 import cv2
@@ -13,7 +11,6 @@ from relativeglobalhistogramstretching import RelativeGHstretching
 np.seterr(over='ignore')
 if __name__ == '__main__':
     pass
-
 
 folder = "E:/Code/Python/2023/Single-Underwater-Image-Enhancement-and-Color-Restoration/Datasets"
 
