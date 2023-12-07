@@ -2,7 +2,6 @@ import os
 import numpy as np
 import cv2
 import natsort
-import xlwt
 import datetime
 
 from color_equalisation import RGB_equalisation
@@ -15,10 +14,9 @@ np.seterr(over='ignore')
 if __name__ == '__main__':
     pass
 
-# folder = "C:/Users/Administrator/Desktop/UnderwaterImageEnhancement/NonPhysical/UCM"
-folder = "C:/Users/Administrator/Desktop/Databases/Dataset"
+folder = "E:/Code/Python/2023/Single-Underwater-Image-Enhancement-and-Color-Restoration/Datasets"
 
-path = folder + "/InputImages"
+path = folder + "/Input"
 files = os.listdir(path)
 files =  natsort.natsorted(files)
 
@@ -28,16 +26,10 @@ for i in range(len(files)):
     prefix = file.split('.')[0]
     if os.path.isfile(filepath):
         print('********    file   ********',file)
-        # img = cv2.imread('InputImages/' + file)
-        img = cv2.imread(folder + '/InputImages/' + file)
-        # print('Number',Number)
+        img = cv2.imread(filepath)
         sceneRadiance = RGB_equalisation(img)
         sceneRadiance = stretching(sceneRadiance)
-        # # cv2.imwrite(folder + '/OutputImages/' + Number + 'Stretched.jpg', sceneRadiance)
         sceneRadiance = HSVStretching(sceneRadiance)
         sceneRadiance = sceneRadianceRGB(sceneRadiance)
-        cv2.imwrite('OutputImages/' + prefix + '_UCM.jpg', sceneRadiance)
+        cv2.imwrite(folder+'/Output/UCM/'+file, sceneRadiance)
 
-endtime = datetime.datetime.now()
-time = endtime-starttime
-print('time',time)

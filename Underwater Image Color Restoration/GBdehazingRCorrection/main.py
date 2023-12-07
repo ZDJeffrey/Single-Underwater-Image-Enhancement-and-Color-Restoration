@@ -21,19 +21,18 @@ if __name__ == '__main__':
 
 starttime = datetime.datetime.now()
 
-# folder = "C:/Users/Administrator/Desktop/UnderwaterImageEnhancement/Physical/GBdehazingRCorrection"
-folder = "C:/Users/Administrator/Desktop/Databases/Dataset"
-path = folder + "/InputImages"
+folder = "E:/Code/Python/2023/Single-Underwater-Image-Enhancement-and-Color-Restoration/Datasets"
+
+path = folder + "/Input"
 files = os.listdir(path)
 files =  natsort.natsorted(files)
 
 for i in range(len(files)):
     file = files[i]
     filepath = path + "/" + file
-    prefix = file.split('.')[0]
     if os.path.isfile(filepath):
         print('********    file   ********',file)
-        img = cv2.imread(folder +'/InputImages/' + file)
+        img = cv2.imread(filepath)
         img = (img - img.min()) / (img.max() - img.min()) * 255
         blockSize = 9
         largestDiff = determineDepth(img, blockSize)
@@ -46,7 +45,7 @@ for i in range(len(files)):
         # TransmissionComposition(folder, transmission, number, param='coarse')
         transmission = refinedtransmission(transmission, img)
 
-        cv2.imwrite('OutputImages/' + prefix + '_GBDehazedRcoorectionUDCP_TM.jpg', np.uint8(transmission[:, :, 0] * 255))
+        cv2.imwrite(folder+'/Output/GBDehazedRcoorectionUDCP_TM/'+file, np.uint8(transmission[:, :, 0] * 255))
 
 
         # TransmissionComposition(folder, transmission, number, param='refined_15_175_175')
@@ -67,7 +66,7 @@ for i in range(len(files)):
         sceneRadiance = AdaptiveSceneRadiance(sceneRadiance, S_x)
         
         # print('sceneRadiance',sceneRadiance)
-        cv2.imwrite('OutputImages/' + prefix + 'GBDehazedRcoorectionUDCPAdaptiveMap.jpg', sceneRadiance)
+        cv2.imwrite(folder+'/Output/GBDehazedRcoorectionUDCPAdaptiveMap/'+file, sceneRadiance)
 
 
 Endtime = datetime.datetime.now()

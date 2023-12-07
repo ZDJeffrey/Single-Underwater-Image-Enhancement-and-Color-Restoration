@@ -11,7 +11,6 @@ import os
 import numpy as np
 import cv2
 import natsort
-import xlwt
 
 
 # 用于排序时存储原来像素点位置的数据结构
@@ -175,19 +174,20 @@ np.seterr(over='ignore')
 if __name__ == '__main__':
     pass
 
-# folder = "C:/Users/Administrator/Desktop/UnderwaterImageEnhancement/Physical/DCP"
-folder = "C:/Users/Administrator/Desktop/Databases/Dataset"
-path = folder + "/InputImages"
+folder = "E:/Code/Python/2023/Single-Underwater-Image-Enhancement-and-Color-Restoration/Datasets"
+
+path = folder + "/Input"
 files = os.listdir(path)
 files =  natsort.natsorted(files)
 
 for i in range(len(files)):
     file = files[i]
     filepath = path + "/" + file
-    prefix = file.split('.')[0]
     if os.path.isfile(filepath):
         print('********    file   ********',file)
-        img = cv2.imread(folder +'/InputImages/' + file)
+        img = cv2.imread(filepath)
+
         transmission, sceneRadiance = getRecoverScene(img)
-        cv2.imwrite('OutputImages/' + prefix + '_DCP_TM.jpg', np.uint8(transmission * 255))
-        cv2.imwrite('OutputImages/' + prefix + '_DCP.jpg', sceneRadiance)
+        cv2.imwrite(folder+'/Output/DCP_TM/'+file, np.uint8(transmission * 255))
+        cv2.imwrite(folder+'/Output/DCP/'+file, sceneRadiance)
+

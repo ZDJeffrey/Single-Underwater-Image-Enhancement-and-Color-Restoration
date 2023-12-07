@@ -21,9 +21,9 @@ if __name__ == '__main__':
 
 starttime = datetime.datetime.now()
 
-# folder = "C:/Users/Administrator/Desktop/UnderwaterImageEnhancement/Physical/ULAP"
-folder = "C:/Users/Administrator/Desktop/Databases/Dataset"
-path = folder + "/InputImages"
+folder = "E:/Code/Python/2023/Single-Underwater-Image-Enhancement-and-Color-Restoration/Datasets"
+
+path = folder + "/Input"
 files = os.listdir(path)
 files =  natsort.natsorted(files)
 
@@ -33,7 +33,7 @@ for i in range(len(files)):
     prefix = file.split('.')[0]
     if os.path.isfile(filepath):
         print('********    file   ********',file)
-        img = cv2.imread(folder +'/InputImages/' + file)
+        img = cv2.imread(filepath)
 
         blockSize = 9
         gimfiltR = 50  # 引导滤波时半径的大小
@@ -45,7 +45,7 @@ for i in range(len(files)):
         refineDR = guided_filter.filter(DepthMap)
         refineDR = np.clip(refineDR, 0,1)
 
-        cv2.imwrite('OutputImages/' + prefix + '_ULAPDepthMap.jpg', np.uint8(refineDR * 255))
+        cv2.imwrite(folder+'/Output/ULAPDepthMap/'+file, np.uint8(refineDR * 255))
 
         AtomsphericLight = BLEstimation(img, DepthMap) * 255
 
@@ -57,12 +57,12 @@ for i in range(len(files)):
         sceneRadiance = sceneRadianceRGB(img, transmission, AtomsphericLight)
 
 
-        cv2.imwrite('OutputImages/' + prefix + '_ULAP_TM.jpg', np.uint8(transmission[:, :, 2] * 255))
+        cv2.imwrite(folder+'/Output/ULAP_TM/'+file, np.uint8(transmission[:, :, 2] * 255))
 
 
         # print('AtomsphericLight',AtomsphericLight)
 
-        cv2.imwrite('OutputImages/' + prefix + '_ULAP.jpg', sceneRadiance)
+        cv2.imwrite(folder+'/Output/ULAP/'+file, sceneRadiance)
 
 
 Endtime = datetime.datetime.now()

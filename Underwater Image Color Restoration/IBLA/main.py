@@ -26,19 +26,18 @@ if __name__ == '__main__':
     pass
 
 starttime = datetime.datetime.now()
-folder = "C:/Users/Administrator/Desktop/UnderwaterImageEnhancement/Physical/IBLA"
-# folder = "C:/Users/Administrator/Desktop/Databases/Dataset"
-path = folder + "/InputImages"
+folder = "E:/Code/Python/2023/Single-Underwater-Image-Enhancement-and-Color-Restoration/Datasets"
+
+path = folder + "/Input"
 files = os.listdir(path)
 files =  natsort.natsorted(files)
 
 for i in range(len(files)):
     file = files[i]
     filepath = path + "/" + file
-    prefix = file.split('.')[0]
     if os.path.isfile(filepath):
         print('********    file   ********',file)
-        img = cv2.imread(folder +'/InputImages/' + file)
+        img = cv2.imread(filepath)
         blockSize = 9
         n = 5
         RGB_Darkchannel = getRGB_Darkchannel(img, blockSize)
@@ -77,7 +76,7 @@ for i in range(len(files)):
 
         # sceneRadiance =  RecoverHE(sceneRadiance)
         # cv2.imwrite('OutputImages/' + prefix + '_IBLA_HE.jpg', sceneRadiance)
-        cv2.imwrite('OutputImages/' + prefix + '_IBLA.jpg', sceneRadiance)
+        cv2.imwrite(folder+'/Output/IBLA/'+file, sceneRadiance)
 
 
 Endtime = datetime.datetime.now()
