@@ -4,9 +4,7 @@ import cv2
 import natsort
 
 from LabStretching import LABStretching
-from color_equalisation import RGB_equalisation
 from global_stretching_RGB import stretching
-from relativeglobalhistogramstretching import RelativeGHstretching
 
 np.seterr(over='ignore')
 if __name__ == '__main__':

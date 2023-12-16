@@ -1,84 +1,125 @@
-<h1>Single-Underwater-Image-Enhancement-and-Color-Restoration</h1>
-<h3>This is python implementation for a comprehensive review paper "An Experimental-based Review of Image Enhancement and Image Restoration Methods for Underwater Imaging" </h3>
-
-
-**ABSTRACT!**  Underwater images play a key role in ocean exploration, but often suffer from severe quality degradation due to light absorption and scattering in water medium. Although major breakthroughs have been made recently in the general area of image enhancement and restoration, the applicability of new methods for improving the quality of underwater images has not specifically been captured. In this paper, we review the image enhancement and restoration methods that tackle typical underwater image impairments, including some extreme degradations and distortions. Firstly, we introduce the key causes of quality reduction in underwater images, in terms of the underwater image formation model (IFM). Then, we reviews underwater restoration methods, considering both the IFM-free and the IFM-based approaches. Next, we present an experimental-based comparative evaluation of state-of-the-art IFM-free and IFM-based methods, considering also the prior-based parameter estimation algorithms of the IFM-based methods, using both subjective and objective analysis. Starting from this study, we pinpoint the key shortcomings of existing methods, drawing recommendations for future research in this area. Our review of underwater image enhancement and restoration provides researchers with the necessary background to appreciate challenges and opportunities in this important field.
-
-## Already Implemented
-
-**Underwater Image Color Restoration**
-- DCP: Single Image Haze Removal Using Dark Channel Prior (2011)
-- GBdehazingRCorrection: Single underwater image restoration by blue-green channels dehazing and red channel correction (2016)
-- IBLA: Underwater Image Restoration Based on Image Blurriness and Light Absorption (2017)
-- LowComplexityDCP: Low Complexity Underwater Image Enhancement Based on Dark Channel Prior (2011)
-- MIP: Initial results in underwater single image dehazing (2010)
-- NewOpticalModel: Single underwater image enhancement with a new optical model (2013)
-- RoWS: Removal of water scattering (2010)
-- UDCP: Transmission Estimation in Underwater Single Images (2013)
-- ULAP: A Rapid Scene Depth Estimation Model Based on Underwater Light Attenuation Prior for Underwater Image Restoration (2018)
-
-**Underwater Image Enhancement**
-- CLAHE: Contrast limited adaptive histogram equalization (1994)
-- Fusion-Matlab: Enhancing underwater images and videos by fusion (2012)
-- GC: Gamma Correction
-- HE: Image enhancement by histogram transformation (2011)
-- ICM: Underwater Image Enhancement Using an Integrated Colour Model (2007)
-- UCM: Enhancing the low quality images using Unsupervised Colour Correction Method (2010)
-- RayleighDistribution: Underwater image quality enhancement through composition of dual-intensity images and Rayleigh-stretching (2014)
-- RGHS: Shallow-Water Image Enhancement Using Relative Global Histogram Stretching Based on Adaptive Parameter Acquisition (2018)
+# Underwater-Image-Enhancement
+This is a python implementation of some underwater image enhancement algorithms, including CLAHE, MSRCR CLAHE_mix and my proposed method——MSRCR+CLAHE.
 
 
 
-## Install
-Here is the list of libraries you need to install to execute the code:
-- python = 3.6
-- cv2
-- numpy
-- scipy
+## Requirements
+- OpenCV
+- Numpy
 - matplotlib
-- scikit-image
 - natsort
-- math
-- datetime
 
-## Easy Usage
-1. Complete the running environment configuration;
-2. Put the inputs images to corresponding folders :
-  - (create 'InputImages' and 'OutputImages' folders, then put raw images to 'InputImages' folder);
-3. Python main.py;
-4. Find the enhanced/restored images in "OutputImages" folder.
-
-
-## Citation
-If our database or code proves useful for your research, please cite our review papers and some related papers.
-
+## Run
+Before running, you should set the path to get your input images and save the output images in the main.py file. Espacially, you should check the output path is exist or not. Then, you can run the main.py file to get the results.
+You can check the parameters by
+```bash
+python main.py --help
 ```
-@article{Review of Image Enhancement and Image Restoration Methods,
-    author    = {Yan Wang, Wei Song, Giancarlo Fortino, Lizhe Qi, Wenqiang Zhang, Antonio Liotta},
-    title     = {An Experimental-based Review of Image Enhancement and Image Restoration Methods for Underwater Imaging},
-    journal   = {IEEE Access，DOI:10.1109/ACCESS.2019.2932130},
-    year      = {2019}
-}
-@article{Underwater Image Enhancement Method,
-    author    = {Wei Song, Yan Wang, Dongmei Huang, Antonio Liotta, Cristian Perra},
-    title     = {Enhancement of Underwater Images with Statistical Model of Background Light and Optimization of Transmission Map},
-    journal   = {IEEE Transactions on Broadcasting},
-    year      = {2019}
-}
-@article{Underwater Image Restoration,PCM2018
-    author    = {Wei Song, Yan Wang,  Dongmei Huang, Tjondronegoro Dian},
-    title     = {A Rapid Scene Depth Estimation Model Based on Underwater Light Attenuation Prior for Underwater Image Restoration},
-    journal   = {DOI: 10.1007/978-3-030-00776-8_62},
-    year      = {2018}
-}
-@article{Underwater Image Enhancement,MMM2018
-    author    = {Dongmei Huang, Yan Wang, Wei Song, Sequeira Jean, Mavromatis Sébastien},
-    title     = {Shallow-Water Image Enhancement Using Relative Global Histogram Stretching Based on Adaptive Parameter Acquisition},
-    journal   = {DOI: 10.1007/978-3-319-73603-7_37},
-    year      = {2018}
-}
+The only parameters is the name of the algorithm to use. For example, if you want to use MSRCR+CLAHE, you can run
+```bash
+python main.py MSRCR_CLAHE
 ```
 
-## Contact Authors
-- Yan Wang, e-mail: 19110860017@fudan.edu.cn
-- Wei Song, e-mail: wsong@shou.edu.cn
+
+## Results
+<div class="table-container" style="text-align:center;">
+    <table>
+        <thead>
+        <tr>
+            <th>method</th>
+            <th>origin</th>
+            <th>CLAHE</th>
+            <th>CLAHE_mix</th>
+            <th>MSRCR</th>
+            <th>MSRCR_CLAHE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>UIQM avg</th>
+            <td>2.534</td>
+            <td>2.750</td>
+            <td>2.659</td>
+            <td>2.890</td>
+            <th>2.938</th>
+        </tr>
+        </tbody>
+    </table>
+    <div class="table-comment">
+        <p style="clear:both; font-style:italic; font-size:14px; margin-top:10px;">UIQM for method mentioned before</p>
+    </div>
+</div>
+
+<head>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+        }
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item">
+            <img src="img/3.jpg" alt="Image 1">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_3.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/16.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_16.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/47.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_47.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/554.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_554.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/246.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_246.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/2552.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_2552.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/2129.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_2129.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/5015.jpg" alt="Image 2">
+        </div>
+        <div class="grid-item">
+            <img src="img/MSRCR_CLAHE_5015.jpg" alt="Image 2">
+        </div>
+    </div>
+    <div style="text-align: center;font-style:italic; font-size:14px; margin-top:10px;">
+        MSRCR+CLAHE
+    </div>
+</body>
